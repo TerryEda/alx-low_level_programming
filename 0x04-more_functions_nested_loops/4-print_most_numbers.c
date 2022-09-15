@@ -2,19 +2,25 @@
 #include "main.h"
 
 /**
-*print_numbers - function that print all numbers from
-*0 to 9
+*more_numbers - prints numbers to 14
 *
 *Return: returns nothing
 */
 
-void print_numbers(void)
+void more_numbers(void)
 {
-	int n;
+	int n1, n2;
 
-	for (n = 48; n < 58; n++)
+	for (n1 = 0; n1 < 10; n1++)
 	{
-		putchar(n);
+		for (n2 = 0; n2 <= 14; n2++)
+		{
+			if (n2 > 9)
+			{
+				putchar((n2 / 10) + '0');
+			}
+			putchar((n2 % 10) + '0');
+		}
+		putchar(10);
 	}
-	putchar(10);
 }
