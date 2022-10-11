@@ -4,8 +4,3 @@
 #define ABS(x) ((x) < (0) ? ((x) * (-1)) : (x))
 
 #endif
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Priv
