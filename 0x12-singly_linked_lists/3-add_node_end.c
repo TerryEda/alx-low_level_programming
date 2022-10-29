@@ -1,63 +1,74 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include "lists.h"
 
+int _str_len(const char *str);
+
 /**
-  * add_node_end - Adds a new node at the end of a list
-  * @head: The original linked list
-  * @str: The string to add to the node
-  *
-  * Return: The address of the new list or NULL if it failed
-  */
+ * add_node_end - add a new node to the end of the linked list
+ * @head: the head of the linked list
+ * @str: string filed of the structure
+ * Return: pointer to the new node
+ */
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *new_list, *temp;
+	list_t *lastnode;
+	list_t *temp;
 
-	if (str != NULL)
+	if (*head == NULL)
 	{
-		new_list = malloc(sizeof(list_t));
-		if (new_list == NULL)
-			return (NULL);
-
-		new_list->str = strdup(str);
-		new_list->len = _strlen(str);
-		new_list->next = NULL;
-
+		/*
+		 * make head pointer to the first structure
+		 */
+		*head = malloc(sizeof(list_t));
 		if (*head == NULL)
-		{
-			*head  = new_list;
-			return (*head);
-		}
-		else
-		{
-			temp = *head;
-			while (temp->next)
-				temp = temp->next;
-
-			temp->next = new_list;
-			return (temp);
-		}
+			return (NULL);
+		(*head)->str = strdup(str);
+		(*head)->len = _str_len(str);
+		(*head)->next = NULL;
+		return (*head);
+	}
+	else
+	{
+		/*
+		 * create a new node, and make the last node point to it
+		 */
+		lastnode = malloc(sizeof(list_t));
+		if (lastnode == NULL)
+			return (NULL);
+		lastnode->str = strdup(str);
+		lastnode->len = _str_len(str);
+		lastnode->next = NULL;
+		/*
+		 * find the last node, save it as temp
+		 */
+		for (temp = *head; temp->next != NULL; temp = temp->next)
+			;
+		/*
+		 * attach lastnode to the end
+		 */
+		temp->next = lastnode;
 	}
 
-	return (NULL);
+	return (lastnode);
 }
 
+
+
+
+
 /**
-  * _strlen - Returns the length of a string
-  * @s: String to count
-  *
-  * Return: String length
-  */
-int _strlen(const char *s)
+ * _str_len - finds length of a string
+ * @str: string to find its length
+ * Description: finds length of a string (not including null character)
+ * Return: length of string
+ */
+int _str_len(const char *str)
 {
-	int c = 0;
+	int i;
 
-	while (*s)
-	{
-		s++;
-		c++;
-	}
+	if (str == NULL)
+		return (0);
 
-	return (c);
+	for (i = 0; str[i] != '\0'; i++)
+		;
+	return (i);
 }
